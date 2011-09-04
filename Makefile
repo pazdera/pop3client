@@ -4,7 +4,7 @@ LDFLAGS=
 EXECUTABLE=pop3client
 
 SOURCES_DIR=
-SOURCES=$(addprefix $(SOURCES_DIR), main.cpp cliarguments.cpp errors.cpp socket.cpp)
+SOURCES=$(addprefix $(SOURCES_DIR), main.cpp cliarguments.cpp error.cpp socket.cpp)
 
 OBJECTS=$(SOURCES:.cpp=.o)
 
