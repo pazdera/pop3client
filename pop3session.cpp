@@ -72,4 +72,25 @@ void Pop3Session::getMultilineResponse(ServerResponse* response)
     }
 }
 
+void Pop3Session::authenticate(std::string const& username, std::string const& password)
+{
+    ServerResponse response;
+
+    sendCommand("USER " + username);
+    getResponse(&response);
+
+    if (!response->status)
+    {
+        throw ServerError("Authentication failed", response->statusMessage);
+    }
+
+    sendCommand("PASS " + password);
+    getResponse(&response);
+
+    if (!response->status)
+    {
+        throw ServerError("Authentication failed", response->statusMessage);
+    }
+}
+
 

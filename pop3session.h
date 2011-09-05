@@ -11,7 +11,7 @@ class Pop3Session
         void authenticate(std::string const& username, std::string const& password);
 
         void printMessageList();
-        void printMessage(int messageId);
+        void printMessage(int const& messageId);
 
         /* Exceptions */
         class ServerError;
@@ -19,10 +19,7 @@ class Pop3Session
     private:
         struct ServerResponse;
 
-        void open();
-        void close();
-
-        void sendCommand(std::string command);
+        void sendCommand(std::string const& command);
         void getResponse(ServerResponse* response);
         void gerMultilineResponse(ServerResponse* response);
 
