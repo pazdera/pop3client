@@ -1,10 +1,20 @@
 
+#ifndef _POP3SESSION__H
+#define _POP3SESSION__H
+
+#include <list>
+#include <string>
+
+#include "error.h"
+
+class Socket;
 
 class Pop3Session
 {
     Socket* socket;
 
     public:
+        Pop3Session();
         Pop3Session(std::string const& server, int const& port);
         ~Pop3Session();
 
@@ -21,7 +31,7 @@ class Pop3Session
 
         void sendCommand(std::string const& command);
         void getResponse(ServerResponse* response);
-        void gerMultilineResponse(ServerResponse* response);
+        void getMultilineResponse(ServerResponse* response);
 
         void releaseSocket();
 };
@@ -33,7 +43,7 @@ struct Pop3Session::ServerResponse
     std::list<std::string> data;
 };
 
-class ServerError : public Error
+class Pop3Session::ServerError : public Error
 {
     public:
         ServerError(std::string what, std::string serverStatus)
@@ -43,3 +53,4 @@ class ServerError : public Error
         }
 };
 
+#endif

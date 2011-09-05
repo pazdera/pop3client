@@ -1,4 +1,10 @@
 
+#include "pop3session.h"
+
+#include <iostream>
+
+#include "socket.h"
+
 Pop3Session::Pop3Session()
     : socket(NULL)
 {}
@@ -13,7 +19,7 @@ Pop3Session::~Pop3Session()
     releaseSocket();
 }
 
-Pop3Session::releaseSocket()
+void Pop3Session::releaseSocket()
 {
     if (socket != NULL)
     {
@@ -21,7 +27,7 @@ Pop3Session::releaseSocket()
     }
 }
 
-void Pop3Session::sendCommand(std::string command)
+void Pop3Session::sendCommand(std::string const& command)
 {
     socket->write(command);
 }
@@ -54,7 +60,7 @@ void Pop3Session::getMultilineResponse(ServerResponse* response)
     while (true)
     {
         buffer.clear();
-        socket->readLine(buffer);
+        socket->readLine(&buffer);
         
         if (buffer == "." || buffer.length() == 0)
         {
@@ -79,18 +85,33 @@ void Pop3Session::authenticate(std::string const& username, std::string const& p
     sendCommand("USER " + username);
     getResponse(&response);
 
-    if (!response->status)
+    if (!response.status)
     {
-        throw ServerError("Authentication failed", response->statusMessage);
+        throw ServerError("Authentication failed", response.statusMessage);
     }
 
     sendCommand("PASS " + password);
     getResponse(&response);
 
-    if (!response->status)
+    if (!response.status)
     {
-        throw ServerError("Authentication failed", response->statusMessage);
+        throw ServerError("Authentication failed", response.statusMessage);
     }
 }
 
+void Pop3Session::printMessageList()
+{
+    ServerResponse response;
 
+    sendCommand("LIST");
+    getMultilineResponse(&response);
+
+    int spacePosition = 0;
+    for (std::list<std::string>::iterator line = response.data.begin();
+         line != response.data.end();
+         line++)
+    {
+        spacePosition = line->find(' ');
+        std::cout << line->substr(0, spacePosition);
+    }
+}
