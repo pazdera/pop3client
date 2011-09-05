@@ -6,9 +6,9 @@
 #include <cstdio>
 #include <termios.h>
 
-
 #include "error.h"
 #include "cliarguments.h"
+#include "pop3session.h"
 
 #ifdef _GNU_SOURCE
     extern "C" const std::string PROGRAM_NAME(program_invocation_name);
@@ -103,7 +103,29 @@ int main(int argc, char **argv)
 
     std::cout << "Password is " << password << std::endl;
 
-    
+    try /* contacting POP3 server */
+    {
+        Pop3Session pop3;
+        pop3.authenticate(arguments.getUsername(), password);
+
+        /* Remove password from memory. */
+        password.clear();
+
+        if (arguments.isMessageIdSet())
+        {
+            pop3.printMessage(arguments.getMessageId());
+        }
+        else
+        {
+            pop3.printMessageList();
+        }
+    }
+    catch (Error& error)
+    {
+        std::cerr << error.what() << std::endl;
+        exit(EXIT_FAILURE);
+    }
 
     return EXIT_SUCCESS;
 }
+
