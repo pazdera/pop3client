@@ -1,0 +1,4 @@
+*.o
+pop3client
+*.swp
+*.swo
