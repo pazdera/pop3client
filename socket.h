@@ -28,7 +28,8 @@ class Socket
     std::string port;
 
     public:
-        Socket(std::string inputAddress, std::string inputPort);
+        Socket(std::string const& inputAddress, int inputPort);
+        Socket(std::string const& inputAddress, std::string const& inputPort);
         ~Socket();
 
         /** Just interface for read(2) */

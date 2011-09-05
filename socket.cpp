@@ -11,6 +11,7 @@
 #include "error.h"
 
 #include <string>
+#include <sstream>
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -23,12 +24,25 @@
 #include <string.h>
 
 
-Socket::Socket (std::string inputAddress, std::string inputPort)
+Socket::Socket(std::string const& inputAddress, std::string const& inputPort)
 {
     socketFileDescriptor = -1;
 
     address = inputAddress;
     port    = inputPort;
+
+    open();
+}
+
+Socket::Socket(std::string const& inputAddress, int inputPort)
+{
+    socketFileDescriptor = -1;
+
+    std::stringstream portInString;
+    portInString << inputPort;
+
+    address = inputAddress;
+    port    = portInString.str();
 
     open();
 }
