@@ -38,6 +38,8 @@ class CliArguments
         std::string getHostname() const { return hostname; }
         int getMessageId() const { return messageId; }
 
+        bool isMessageIdSet() const { return messageId != 0; }
+
     private:
         static int convertStringToInteger(std::string numberStoredInString);
 
