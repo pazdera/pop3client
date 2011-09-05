@@ -28,8 +28,6 @@ std::string getPassword()
 {
     struct termios oldTerminalFlags, newTerminalFlags;
 
-    std::cout << "Password: ";
-
     if (tcgetattr(fileno(stdin), &oldTerminalFlags) != 0)
     {
         throw std::runtime_error("Unable to set terminal flags");
@@ -49,8 +47,6 @@ std::string getPassword()
 
     /* Restore terminal. */
     tcsetattr(fileno(stdin), TCSAFLUSH, &oldTerminalFlags);
-
-    std::cout << std::endl;
 
     return password;
 }
@@ -95,7 +91,9 @@ int main(int argc, char **argv)
     std::string password;
     try
     {
+        std::cout << "Password: ";
         password = getPassword();
+        std::cout << std::endl;
     }
     catch (std::exception& error)
     {
