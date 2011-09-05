@@ -7,8 +7,8 @@
 #include <stdexcept>
 #include <string>
 
-#ifndef _ERRORS__H
-#define _ERRORS__H
+#ifndef _ERROR__H
+#define _ERROR__H
 
 class Error : public std::exception
 {
