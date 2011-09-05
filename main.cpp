@@ -22,7 +22,7 @@
  * password. This is a substitute for glibc
  * getpass() function which is deprecated.
  *
- * @return Entered password
+ * @return Entered password.
  */
 std::string getPassword()
 {
@@ -36,7 +36,7 @@ std::string getPassword()
     }
 
     newTerminalFlags = oldTerminalFlags;
-    newTerminalFlags.c_lflag &= ~(ICANON | ECHO);
+    newTerminalFlags.c_lflag &= ~( ECHO);
  
     if (tcsetattr(fileno(stdin), TCSAFLUSH, &newTerminalFlags) != 0)
     {
@@ -104,6 +104,8 @@ int main(int argc, char **argv)
     }
 
     std::cout << "Password is " << password << std::endl;
+
+    
 
     return EXIT_SUCCESS;
 }

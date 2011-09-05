@@ -51,10 +51,10 @@ void CliArguments::parse(int argc, char **argv)
         setMessageId(argv[optind]);
     }
 
-    verifyMandatoryArguments();
+    checkMandatoryArguments();
 }
 
-void CliArguments::verifyMandatoryArguments() const
+void CliArguments::checkMandatoryArguments() const
 {
     if (hostname.length() <= 0)
     {

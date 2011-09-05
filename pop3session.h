@@ -46,7 +46,7 @@ struct Pop3Session::ServerResponse
 class Pop3Session::ServerError : public Error
 {
     public:
-        ServerError(std::string what, std::string serverStatus)
+        ServerError(std::string const& what, std::string const& serverStatus)
         {
             problem = what;
             reason = serverStatus;

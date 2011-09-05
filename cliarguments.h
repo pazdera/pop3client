@@ -46,7 +46,7 @@ class CliArguments
         void setUsername(char* optarg);
         void setMessageId(char* optarg);
 
-        void verifyMandatoryArguments() const;
+        void checkMandatoryArguments() const;
 
     public: /* Exceptions */
         class GetoptError;
