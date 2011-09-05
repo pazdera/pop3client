@@ -15,13 +15,13 @@ class Pop3Session
 
     public:
         Pop3Session();
-        Pop3Session(std::string const& server, int const& port);
+        Pop3Session(std::string const& server, int port);
         ~Pop3Session();
 
         void authenticate(std::string const& username, std::string const& password);
 
         void printMessageList();
-        void printMessage(int const& messageId);
+        void printMessage(int messageId);
 
         /* Exceptions */
         class ServerError;

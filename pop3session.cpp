@@ -9,7 +9,7 @@ Pop3Session::Pop3Session()
     : socket(NULL)
 {}
 
-Pop3Session::Pop3Session(std::string const& server, int const& port)
+Pop3Session::Pop3Session(std::string const& server, int port)
 {
     socket = new Socket(server, port);
 }
@@ -114,4 +114,9 @@ void Pop3Session::printMessageList()
         spacePosition = line->find(' ');
         std::cout << line->substr(0, spacePosition);
     }
+}
+
+void Pop3Session::printMessage(int messageId)
+{
+    
 }
