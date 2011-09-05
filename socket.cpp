@@ -58,9 +58,10 @@ void Socket::open()
     hints.ai_flags = 0;
     hints.ai_protocol = 0;
 
-    if (getaddrinfo(address.c_str(), port.c_str(), &hints, &result) != 0)
+    int getaddrinfoReturnCode = getaddrinfo(address.c_str(), port.c_str(), &hints, &result);
+    if (getaddrinfoReturnCode != 0)
     {
-        throw ConnectionError("Server not found");
+        throw ConnectionError(gai_strerror(getaddrinfoReturnCode));
     }
 
     for (resultPointer = result; resultPointer != NULL; resultPointer = resultPointer->ai_next)
