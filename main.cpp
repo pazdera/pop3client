@@ -7,7 +7,7 @@
 #include <termios.h>
 
 
-#include "errors.h"
+#include "error.h"
 #include "cliarguments.h"
 
 #ifdef _GNU_SOURCE
@@ -28,13 +28,15 @@ std::string getPassword()
 {
     struct termios oldTerminalFlags, newTerminalFlags;
 
+    std::cout << "Password: ";
+
     if (tcgetattr(fileno(stdin), &oldTerminalFlags) != 0)
     {
         throw std::runtime_error("Unable to set terminal flags");
     }
 
     newTerminalFlags = oldTerminalFlags;
-    newTerminalFlags.c_lflag &= ~(ECHO);
+    newTerminalFlags.c_lflag &= ~(ICANON | ECHO);
  
     if (tcsetattr(fileno(stdin), TCSAFLUSH, &newTerminalFlags) != 0)
     {
@@ -47,6 +49,8 @@ std::string getPassword()
 
     /* Restore terminal. */
     tcsetattr(fileno(stdin), TCSAFLUSH, &oldTerminalFlags);
+
+    std::cout << std::endl;
 
     return password;
 }
@@ -91,9 +95,7 @@ int main(int argc, char **argv)
     std::string password;
     try
     {
-        std::cout << "Password for " << arguments.getUsername() << ": ";
         password = getPassword();
-        std::cout << std::endl;
     }
     catch (std::exception& error)
     {
@@ -101,7 +103,7 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    std::cerr << password << std::endl;
+    std::cout << "Password is " << password << std::endl;
 
     return EXIT_SUCCESS;
 }

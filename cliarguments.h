@@ -14,7 +14,7 @@
 #include <string>
 #include <unistd.h>
 
-#include "errors.h"
+#include "error.h"
 
 class CliArguments
 {

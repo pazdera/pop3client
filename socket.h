@@ -12,7 +12,7 @@
 
 #include <string>
 
-#include "errors.h"
+#include "error.h"
 /**
  * Socket Class
  *

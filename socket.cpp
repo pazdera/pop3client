@@ -8,7 +8,7 @@
  */
 
 #include "socket.h"
-#include "errors.h"
+#include "error.h"
 
 #include <string>
 

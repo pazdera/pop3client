@@ -9,7 +9,6 @@
 
 #include <string>
 #include <iostream>
-#include <stdexcept>
 #include <stdlib.h>
 #include <unistd.h>
 

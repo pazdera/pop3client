@@ -4,7 +4,7 @@
  * Error class implementaion.
  */
 
-#include "errors.h"
+#include "error.h"
 
 #include <stdexcept>
 #include <string>
