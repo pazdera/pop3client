@@ -8,7 +8,6 @@
 
 #include <stdexcept>
 #include <string>
-
 #include <error.h>
 #include <errno.h>
 

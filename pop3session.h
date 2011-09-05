@@ -13,6 +13,8 @@ class Pop3Session
         void printMessageList();
         void printMessage(int messageId);
 
+        /* Exceptions */
+        class ServerError;
 
     private:
         struct ServerResponse;
@@ -20,7 +22,11 @@ class Pop3Session
         void open();
         void close();
 
-        
+        void sendCommand(std::string command);
+        void getResponse(ServerResponse* response);
+        void gerMultilineResponse(ServerResponse* response);
+
+        void releaseSocket();
 };
 
 struct Pop3Session::ServerResponse
@@ -29,3 +35,14 @@ struct Pop3Session::ServerResponse
     std::string statusMessage;
     std::list<std::string> data;
 };
+
+class ServerError : public Error
+{
+    public:
+        ServerError(std::string what, std::string serverStatus)
+        {
+            problem = what;
+            reason = serverStatus;
+        }
+};
+
