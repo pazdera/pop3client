@@ -60,10 +60,10 @@ void usage(int status)
 {
 
     std::cerr << "Usage: " << PROGRAM_NAME << " -h hostname [-p port] -u username  [id]" << std::endl;
-    std::cerr << "       -h hostname     IP adresa nebo hostname pop3 serveru" << std::endl;
-    std::cerr << "       -p port         TCP port, kde server běží  (implicitně 110)" << std::endl;
-    std::cerr << "       -u username     Uživatelské jméno" << std::endl;
-    std::cerr << "       id              ID zprávy, kterou chceme vypsat" << std::endl;
+    std::cerr << "       -h hostname     remote IP address or hostname" << std::endl;
+    std::cerr << "       -p port         remote TCP port" << std::endl;
+    std::cerr << "       -u username     username" << std::endl;
+    std::cerr << "       id              id of the message to download" << std::endl;
 
     exit(status);
 }
