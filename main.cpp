@@ -18,7 +18,6 @@
 #include <string>
 
 #include <cstdlib>
-#include <cerrno>
 #include <cstdio>
 #include <termios.h>
 
@@ -84,12 +83,13 @@ int main(int argc, char **argv)
 {
     CliArguments arguments;
 
-    try
+    try /* Try to process cli arguments */
     {
         arguments.parse(argc, argv);
     }
     catch (CliArguments::GetoptError& error)
     {
+        /* Getopt print's its own error report, so we just print help. */
         usage(EXIT_FAILURE);
     }
     catch (Error& error)
@@ -98,12 +98,7 @@ int main(int argc, char **argv)
         usage(EXIT_FAILURE);
     }
 
-    std::cerr << "Port: " << arguments.getPort() << std::endl;
-    std::cerr << "User: " << arguments.getUsername() << std::endl;
-    std::cerr << "Host: " << arguments.getHostname() << std::endl;
-    std::cerr << "ID:   " << arguments.getMessageId() << std::endl;
-
-
+    /* Get password. */
     std::string password;
     try
     {
@@ -117,14 +112,16 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    try /* contacting POP3 server */
+    /* Process user's request. */
+    try
     {
         Pop3Session pop3(arguments.getHostname(), arguments.getPort());
         pop3.authenticate(arguments.getUsername(), password);
 
-        /* Remove password from memory. */
-        password.clear();
+        password.clear(); // Remove password from memory
 
+        /* Either print the list of available messages or print
+           some specific message. */
         if (arguments.isMessageIdSet())
         {
             pop3.printMessage(arguments.getMessageId());
