@@ -2,12 +2,12 @@
  * This is pop3client.
  *
  * @file main.cpp
- * @author Radek Pazdera
+ * @author Radek Pazdera (radek.pazdera@gmail.com)
  * 
  * @brief Simple POP3 client
  *
- * This module contains the basic program operation logic.
- * That is:
+ *  This module contains the basic program operation logic.
+ *  That is:
  *    1) process cli arguments
  *    2) get password from stdin
  *    3) process the user's request (i.e. print a list of
@@ -25,11 +25,7 @@
 #include "cliarguments.h"
 #include "pop3session.h"
 
-#ifdef _GNU_SOURCE
-    extern "C" const std::string PROGRAM_NAME(program_invocation_name);
-#else
-    extern "C" const std::string PROGRAM_NAME("pop3client");
-#endif
+#define PROGRAM_NAME "./pop3client"
 
 /** Read password from terminal (stdin).
  *

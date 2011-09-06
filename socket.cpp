@@ -126,7 +126,7 @@ void Socket::readAll(std::string *response)
 {
     char buffer;
 
-    while (read(&buffer, sizeof(buffer)))
+    while (readCharacter(&buffer))
     {
         *response += buffer;
     }

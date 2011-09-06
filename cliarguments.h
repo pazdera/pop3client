@@ -1,12 +1,14 @@
 /**
- *  Author: Radek Pazdera (xpazde00@stud.fit.vutbr.cz)
- *  Date: 10.10.2010
+ * This is part of pop3client.
  *
- *  Description:
- *    This class parses cli arguments and then suplies
- *    abstract interface for accessing them.
+ * @file cliarguments.h
+ * @author Radek Pazdera (radek.pazdera@gmail.com)
+ *
+ * @brief Program interface to CLI arguments
+ *
+ * This module contains interface to CLI arguments that were
+ * supplied to the program at runtime.
  */
-
 
 #ifndef _CLIARGUMENTS__H
 #define _CLIARGUMENTS__H
@@ -16,6 +18,12 @@
 
 #include "error.h"
 
+/** Interface to CLI arguments
+ *
+ * This class can parse arguments using getopt and it
+ * also provides interface for accessing the values later
+ * in the program
+ */
 class CliArguments
 {
     private:
@@ -28,7 +36,7 @@ class CliArguments
       std::string hostname;
       int messageId;
 
-    public: /* Interface */
+    public:
         CliArguments();
 
         void parse(int argc, char **argv);
@@ -40,6 +48,11 @@ class CliArguments
 
         bool isMessageIdSet() const { return messageId != 0; }
 
+        /* Exceptions */
+        class GetoptError;
+        class ArgumentDomainError;
+        class MissingArgumentError;
+
     private:
         static int convertStringToInteger(std::string numberStoredInString);
 
@@ -49,17 +62,23 @@ class CliArguments
         void setMessageId(char* optarg);
 
         void checkMandatoryArguments() const;
-
-    public: /* Exceptions */
-        class GetoptError;
-        class ArgumentDomainError;
-        class MissingArgumentError;
 };
 
-
+/**
+ * This exception is thrown when the getopt() function
+ * fails (i.e. returns '?'). There are no information
+ * associated with the error, because getopt prints its
+ * own error report to stderr. So you don't need to
+ * report anything when you catch this error.
+ */
 class CliArguments::GetoptError : public Error
 {};
 
+/**
+ * Argument of some option was out of it's domain. It
+ * might be caused -- for example -- by supplying
+ * a string where a number was expected etc.
+ */
 class CliArguments::ArgumentDomainError : public Error
 {
     public:
@@ -70,6 +89,10 @@ class CliArguments::ArgumentDomainError : public Error
         }
 };
 
+/**
+ * Instance of this class is thrown when some of the
+ * mandatory CLI arguments were missing.
+ */
 class CliArguments::MissingArgumentError : public Error
 {
     public:

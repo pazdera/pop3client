@@ -1,8 +1,13 @@
 /**
- *  @author Radek Pazdera (xpazde00@stud.fit.vutbr.cz)
+ * This is part of pop3client.
  *
- *  CliArguments implementation.
+ * @file cliarguments.cpp
+ * @author Radek Pazdera (radek.pazdera@gmail.com)
+ *
+ * @brief Implementation of CliArguments
  */
+
+
 
 
 #include "cliarguments.h"

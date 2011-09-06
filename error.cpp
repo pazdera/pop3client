@@ -1,7 +1,10 @@
 /**
- * @author Radek Pazdera
+ * This is a part of pop3client.
  *
- * Error class implementaion.
+ * @file error.cpp
+ * @author Radek Pazdera (radek.pazdera@gmail.com)
+ * 
+ * @brief Error class implementation
  */
 
 #include "error.h"
@@ -11,8 +14,6 @@
 #include <error.h>
 #include <errno.h>
 
-
-extern const std::string PROGRAM_NAME;
 
 Error::Error(std::string what, std::string why)
 {
