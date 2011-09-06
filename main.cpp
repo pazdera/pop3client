@@ -1,3 +1,19 @@
+/**
+ * This is pop3client.
+ *
+ * @file main.cpp
+ * @author Radek Pazdera
+ * 
+ * @brief Simple POP3 client
+ *
+ * This module contains the basic program operation logic.
+ * That is:
+ *    1) process cli arguments
+ *    2) get password from stdin
+ *    3) process the user's request (i.e. print a list of
+ *       available messages or download a specific message)
+ */
+
 #include <iostream>
 #include <string>
 
