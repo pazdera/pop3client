@@ -2,6 +2,7 @@
 #include "pop3session.h"
 
 #include <iostream>
+#include <sstream>
 
 #include "socket.h"
 
@@ -54,7 +55,7 @@ void Pop3Session::getMultilineResponse(ServerResponse* response)
         buffer.clear();
         socket->readLine(&buffer);
         
-        if (buffer == "." || buffer.length() == 0)
+        if (buffer == ".")
         {
             break;
         }
@@ -133,5 +134,18 @@ void Pop3Session::printMessageList()
 
 void Pop3Session::printMessage(int messageId)
 {
-    
+    ServerResponse response;
+
+    std::stringstream command;
+    command << "RETR " << messageId;
+
+    sendCommand(command.str());
+    getMultilineResponse(&response);
+
+    for (std::list<std::string>::iterator line = response.data.begin();
+         line != response.data.end();
+         line++)
+    {
+        std::cout << *line << std::endl;
+    }
 }
