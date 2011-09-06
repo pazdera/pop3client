@@ -11,25 +11,17 @@ Pop3Session::Pop3Session()
 
 Pop3Session::Pop3Session(std::string const& server, int port)
 {
-    socket = new Socket(server, port);
+    open(server, port);
 }
 
 Pop3Session::~Pop3Session()
 {
-    releaseSocket();
-}
-
-void Pop3Session::releaseSocket()
-{
-    if (socket != NULL)
-    {
-        delete socket;
-    }
+   close();
 }
 
 void Pop3Session::sendCommand(std::string const& command)
 {
-    socket->write(command);
+    socket->write(command + "\r\n");
 }
 
 void Pop3Session::getResponse(ServerResponse* response)
@@ -78,6 +70,29 @@ void Pop3Session::getMultilineResponse(ServerResponse* response)
     }
 }
 
+void Pop3Session::open(std::string const& server, int port)
+{
+    socket = new Socket(server, port);
+    
+    ServerResponse welcomeMessage;
+    
+    
+    getResponse(&welcomeMessage);
+
+    if (!welcomeMessage.status)
+    {
+        throw ServerError("Conection refused", welcomeMessage.statusMessage);
+    }
+}
+
+void Pop3Session::close()
+{
+    if (socket != NULL)
+    {
+        delete socket;
+    }
+}
+
 void Pop3Session::authenticate(std::string const& username, std::string const& password)
 {
     ServerResponse response;
@@ -112,7 +127,7 @@ void Pop3Session::printMessageList()
          line++)
     {
         spacePosition = line->find(' ');
-        std::cout << line->substr(0, spacePosition);
+        std::cout << line->substr(0, spacePosition) << std::endl;
     }
 }
 

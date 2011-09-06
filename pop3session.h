@@ -33,7 +33,8 @@ class Pop3Session
         void getResponse(ServerResponse* response);
         void getMultilineResponse(ServerResponse* response);
 
-        void releaseSocket();
+        void open(std::string const& server, int port);
+        void close();
 };
 
 struct Pop3Session::ServerResponse

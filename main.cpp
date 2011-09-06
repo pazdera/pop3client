@@ -91,7 +91,7 @@ int main(int argc, char **argv)
     std::string password;
     try
     {
-        std::cout << "Password: ";
+        std::cout << "Password for " << arguments.getUsername() << ": ";
         password = getPassword();
         std::cout << std::endl;
     }
@@ -101,11 +101,9 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    std::cout << "Password is " << password << std::endl;
-
     try /* contacting POP3 server */
     {
-        Pop3Session pop3;
+        Pop3Session pop3(arguments.getHostname(), arguments.getPort());
         pop3.authenticate(arguments.getUsername(), password);
 
         /* Remove password from memory. */

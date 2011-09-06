@@ -11,6 +11,7 @@
 #include "error.h"
 
 #include <string>
+#include <iostream>
 #include <sstream>
 
 #include <sys/types.h>
@@ -115,7 +116,7 @@ size_t Socket::read(char* buffer, size_t size)
 
 void Socket::write(std::string request)
 {
-    if (::write(socketFileDescriptor, request.c_str(),(request.length())) < 0)
+    if (::write(socketFileDescriptor, request.c_str(), request.length()) < 0)
     {
         throw IOError("Sending error", "Unable to send data to remote host");
     }
