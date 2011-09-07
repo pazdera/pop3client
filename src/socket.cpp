@@ -1,10 +1,9 @@
 /**
- *  IPK 1 - webclient
- *  Author: Radek Pazdera (xpazde00@stud.fit.vutbr.cz)
- *  Date: 13.03.2010
+ * @brief BSD sockets API adapter.
  *
- *  Description:
- *    Socket class is abstraction of BSD socket API.
+ * @file socket.cpp
+ * @author Radek Pazdera (radek.pazdera@gmail.com)
+ * 
  */
 
 #include "socket.h"
@@ -158,5 +157,28 @@ void Socket::readLine(std::string* line)
      
         line->erase(0, 1);
     }
+}
+
+bool Socket::isReadyToRead()
+{
+    fd_set recieveFd;
+    struct timeval timeout;
+    int selectReturnValue;
+
+    FD_ZERO(&recieveFd);
+    FD_SET(socketFileDescriptor, &recieveFd);
+
+    /* 30 seconds timeout */
+    timeout.tv_sec = 30;
+    timeout.tv_usec = 0;
+
+    selectReturnValue = select(socketFileDescriptor + 1, &recieveFd, NULL, NULL, &timeout);
+
+    if (selectReturnValue > 0)
+    {
+        return true;
+    }
+
+    return false;
 }
 

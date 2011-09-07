@@ -1,10 +1,9 @@
 /**
- * This is a part of pop3client.
+ * @brief BSD sockets API adapter.
  *
- * @file error.h
+ * @file socket.h
  * @author Radek Pazdera (radek.pazdera@gmail.com)
  * 
- * @brief BSD sockets API adapter
  */
 
 #ifndef _SOCKET__H
@@ -15,9 +14,11 @@
 #include "error.h"
 
 /**
- * This class is a simple object-oriented wrapper (adapter)
- * around the BSD socket API. Only the TCP client part of
- * the api is supported at the moment. 
+ * @brief Object-oriented BSD socket API wrapper.
+ *
+ *  This class is a simple object-oriented wrapper (adapter)
+ *  around the BSD socket API. Only the TCP client part of
+ *  the api is supported at the moment. 
  */
 class Socket
 {
@@ -26,12 +27,13 @@ class Socket
     std::string port;
 
     public:
+        //Socket(); /* No default constructor. */
         Socket(std::string const& inputAddress, int inputPort);
         Socket(std::string const& inputAddress, std::string const& inputPort);
         ~Socket();
 
         /** 
-         * Read exact number of bytes from the socket
+         * @brief Read exact number of bytes from the socket.
          *
          *  Reads at most \c size bytes from the socket and
          *  stores them to \c buffer. The buffer's size must
@@ -46,10 +48,10 @@ class Socket
         size_t read(char* buffer, size_t size);
 
         /**
-         * Send data to remote host
+         * @brief Send data to remote host.
          *
          *  Writes string stored in \c request to the socket
-         *  without the terminatin '\0'.
+         *  without the terminatin '\\0'.
          *
          * @param[in] request String to write to the socket
          * @return void
@@ -57,7 +59,7 @@ class Socket
         void write(std::string request);
 
         /**
-         * Read all available data from the socket
+         * @brief Read all available data from the socket.
          *
          *  Reads all available data from the socket byte-by-byte
          *  and stores it to \c response.
@@ -67,7 +69,15 @@ class Socket
          */
         void readAll(std::string* response);
 
-        /** Read until \r\n or the end */
+        /**
+         * @brief Read a single line from socket.
+         * 
+         *  This method reads byte-by-byte from the socket until
+         *  \\r\\n is detected or no more data are available.
+         *
+         * @param [out] line Acquired data.
+         * @return void
+         */
         void readLine(std::string* line);
 
 
@@ -79,7 +89,8 @@ class Socket
         void open();
         void close();
 
-        /** Read exactly one byte from the socket
+        /**
+         * @brief Read exactly one byte from the socket.
          *
          * @param[out] buffer Recieved byte
          * @return True on success otherwise False, when
@@ -87,8 +98,16 @@ class Socket
          */
         bool readCharacter(char* buffer);
 
+        bool isReadyToRead();
+
 };
 
+/**
+ * @brief Indicates trouble with connection.
+ *
+ *  This is thrown when the remote host wasn't found
+ *  or when it doesn't accept the connection.
+ */
 class Socket::ConnectionError : public Error
 {
     public:
@@ -99,6 +118,12 @@ class Socket::ConnectionError : public Error
         }
 };
 
+/**
+ * @brief Indicates problems with receiving/sending data.
+ *
+ *  Instance of this class is thrown when reading or writing
+ *  data to socket fails.
+ */
 class Socket::IOError : public Error
 {
     public:

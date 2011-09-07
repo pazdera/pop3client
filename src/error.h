@@ -1,10 +1,9 @@
 /**
- * This is a part of pop3client.
+ * @brief Error handling and reporting tools
  *
  * @file error.h
  * @author Radek Pazdera (radek.pazdera@gmail.com)
  * 
- * @brief Error handling and reporting tools
  */
 
 #ifndef _ERROR__H
@@ -16,10 +15,10 @@
 #define PROGRAM_NAME "pop3client"
 
 /**
- * Base class for errors and exceptions
+ * @brief Base class for errors and exceptions.
  *
- * All exceptions in this program should be derived
- * from this class.
+ *  All exceptions in this program should be derived
+ *  from this class.
  */
 class Error : public std::exception
 {
@@ -33,12 +32,12 @@ class Error : public std::exception
         virtual ~Error() throw();
         
         /**
-         * Get error report
+         * @brief Get error report
          *
-         * Return an error report in the following format:
-         *     <programName>: <problem>: <reason>
+         *  Return an error report in the following format:
+         *      <programName>: <problem>: <reason>
          *
-         * @return Error report
+         * @return Error report.
          */
         const char* what() const throw();
 };

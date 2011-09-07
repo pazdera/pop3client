@@ -1,17 +1,15 @@
 /**
- * This is pop3client.
+ * @brief Simple POP3 client
  *
  * @file main.cpp
  * @author Radek Pazdera (radek.pazdera@gmail.com)
- * 
- * @brief Simple POP3 client
  *
  *  This module contains the basic program operation logic.
  *  That is:
- *    1) process cli arguments
- *    2) get password from stdin
- *    3) process the user's request (i.e. print a list of
- *       available messages or download a specific message)
+ *    process cli arguments,
+ *    get password from stdin,
+ *    process the user's request (i.e. print a list of available messages
+ *                                     or download a specific message).
  *
  * @mainpage pop3client documentation
  *  Welcome to pop3client documentation. Hopefully you'll find here
@@ -37,7 +35,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @endverbatim
- *
  */
 
 #include <iostream>
@@ -53,11 +50,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define PROGRAM_NAME "./pop3client"
 
-/** Read password from terminal (stdin).
+/**
+ * @brief Read password from terminal (stdin)
  *
- * Terminal ECHO is turned off while reading the
- * password. This is a substitute for glibc
- * getpass() function which is deprecated.
+ * Terminal ECHO is turned off while reading the password. This is a
+ * substitute for glibc's getpass() function which is deprecated.
+ *
+ * @warning This (most likely) won't work on Windows.
  *
  * @return Entered password.
  */
@@ -89,6 +88,16 @@ std::string getPassword()
 }
 
 
+/**
+ * @brief Print help and exit.
+ *
+ *  This is a glibc-like function that prints help
+ *  on standard error output and then exits with
+ *  \c status code.
+ *
+ * @param[in] status Status code to exit with. 
+ * @return Never returns.
+ */
 void usage(int status)
 {
 

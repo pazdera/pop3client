@@ -1,3 +1,10 @@
+/**
+ * @brief Client part of POP3 session
+ *
+ * @file pop3session.cpp
+ * @author Radek Pazdera (radek.pazdera@gmail.com)
+ * 
+ */
 
 #include "pop3session.h"
 
@@ -45,10 +52,9 @@ void Pop3Session::getResponse(ServerResponse* response)
     response->data.clear();
 }
 
-void Pop3Session::getMultilineResponse(ServerResponse* response)
+void Pop3Session::getMultilineData(ServerResponse* response)
 {
     std::string buffer;
-    getResponse(response);
 
     while (true)
     {
@@ -120,7 +126,19 @@ void Pop3Session::printMessageList()
     ServerResponse response;
 
     sendCommand("LIST");
-    getMultilineResponse(&response);
+
+    getResponse(&response);
+    if (!response.status)
+    {
+        throw ServerError("Unable to retrieve message list", response.statusMessage);
+    }
+
+    getMultilineData(&response);
+
+    if (response.data.size() == 0)
+    {
+        std::cout << "No messages available on the server." << std::endl;
+    }
 
     int spacePosition = 0;
     for (std::list<std::string>::iterator line = response.data.begin();
@@ -140,8 +158,15 @@ void Pop3Session::printMessage(int messageId)
     command << "RETR " << messageId;
 
     sendCommand(command.str());
-    getMultilineResponse(&response);
 
+    getResponse(&response);
+    if (!response.status)
+    {
+        throw ServerError("Unable to retrieve message list", response.statusMessage);
+    }
+
+    getMultilineData(&response);
+    
     for (std::list<std::string>::iterator line = response.data.begin();
          line != response.data.end();
          line++)

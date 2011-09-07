@@ -1,14 +1,10 @@
 /**
- * This is part of pop3client.
+ * @brief Implementation of CliArguments
  *
  * @file cliarguments.cpp
  * @author Radek Pazdera (radek.pazdera@gmail.com)
  *
- * @brief Implementation of CliArguments
  */
-
-
-
 
 #include "cliarguments.h"
 
@@ -16,7 +12,6 @@
 #include <iostream>
 #include <stdlib.h>
 #include <unistd.h>
-
 
 CliArguments::CliArguments()
 {}

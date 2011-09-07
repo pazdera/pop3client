@@ -1,10 +1,9 @@
 /**
- * This is a part of pop3client.
+ * @brief Error class implementation
  *
  * @file error.cpp
  * @author Radek Pazdera (radek.pazdera@gmail.com)
  * 
- * @brief Error class implementation
  */
 
 #include "error.h"

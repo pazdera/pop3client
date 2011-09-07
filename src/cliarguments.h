@@ -1,13 +1,11 @@
 /**
- * This is part of pop3client.
+ * @brief Program interface to CLI arguments
  *
  * @file cliarguments.h
  * @author Radek Pazdera (radek.pazdera@gmail.com)
  *
- * @brief Program interface to CLI arguments
- *
  * This module contains interface to CLI arguments that were
- * supplied to the program at runtime.
+ * passed to the program at runtime.
  */
 
 #ifndef _CLIARGUMENTS__H
@@ -18,7 +16,8 @@
 
 #include "error.h"
 
-/** Interface to CLI arguments
+/**
+ * @brief Interface to CLI arguments
  *
  * This class can parse arguments using getopt and it
  * also provides interface for accessing the values later
@@ -39,8 +38,20 @@ class CliArguments
     public:
         CliArguments();
 
+        /**
+         * @brief Process CLI arguments.
+         *
+         *  This method parses arguments from \c argv and
+         *  stores them within the class instance for further
+         *  access.
+         *
+         * @param[in] argc Number of arguments in \c argv.
+         * @param[in] argv Arguments passed to the program.
+         * @return void
+         */
         void parse(int argc, char **argv);
 
+        /* Access interface to the argument values. */
         int getPort() const { return port; }
         std::string getUsername() const { return username; }
         std::string getHostname() const { return hostname; }
@@ -56,6 +67,9 @@ class CliArguments
     private:
         static int convertStringToInteger(std::string numberStoredInString);
 
+        /* Internal methods that convert argument values from string
+           to their respective types, check their domain and store
+           them within the instance. */
         void setPort(char* optarg);
         void setHostname(char* optarg);
         void setUsername(char* optarg);
@@ -65,19 +79,23 @@ class CliArguments
 };
 
 /**
- * This exception is thrown when the getopt() function
- * fails (i.e. returns '?'). There are no information
- * associated with the error, because getopt prints its
- * own error report to stderr. So you don't need to
- * report anything when you catch this error.
+ * @brief Indicates an error, that was handled by getopt().
+ *
+ *  This exception is thrown when the getopt() function
+ *  fails (i.e. returns '?'). There are no information
+ *  associated with the error, because getopt prints its
+ *  own error report to stderr. So you don't need to
+ *  report anything when you catch this error.
  */
 class CliArguments::GetoptError : public Error
 {};
 
 /**
- * Argument of some option was out of it's domain. It
- * might be caused -- for example -- by supplying
- * a string where a number was expected etc.
+ * @brief Indicates wrong argument to the program.
+ *
+ *  Argument of some option was out of it's domain. It
+ *  might be caused -- for example -- by supplying
+ *  a string where a number was expected etc.
  */
 class CliArguments::ArgumentDomainError : public Error
 {
@@ -90,8 +108,10 @@ class CliArguments::ArgumentDomainError : public Error
 };
 
 /**
- * Instance of this class is thrown when some of the
- * mandatory CLI arguments were missing.
+ * @brief Indicates missing arguments.
+ *
+ *  Instance of this class is thrown when some of the
+ *  mandatory CLI arguments were missing.
  */
 class CliArguments::MissingArgumentError : public Error
 {
@@ -102,6 +122,7 @@ class CliArguments::MissingArgumentError : public Error
             reason  = argument + " is mandatory";
         }
 };
+
 
 #endif
 
