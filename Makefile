@@ -9,7 +9,7 @@ SOURCES=$(addprefix $(SOURCES_DIR), main.cpp cliarguments.cpp error.cpp socket.c
 OBJECTS=$(SOURCES:.cpp=.o)
 
 
-.PHONY: build debug clean install
+.PHONY: all clean doc
 
 all: $(EXECUTABLE)
 	
@@ -21,6 +21,9 @@ $(EXECUTABLE): $(OBJECTS)
 
 clean:
 	rm -f $(OBJECTS) $(EXECUTABLE)
+
+doc:
+	doxygen Doxyfile
 
 #install: $(EXECUTABLE)
 #	cp $(EXECUTABLE) $(INSTALL_PATH)
