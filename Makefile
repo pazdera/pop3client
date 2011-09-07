@@ -3,7 +3,7 @@ CFLAGS=-c -g -Wall -pedantic
 LDFLAGS=
 EXECUTABLE=pop3client
 
-SOURCES_DIR=
+SOURCES_DIR=src/
 SOURCES=$(addprefix $(SOURCES_DIR), main.cpp cliarguments.cpp error.cpp socket.cpp pop3session.cpp)
 
 OBJECTS=$(SOURCES:.cpp=.o)
