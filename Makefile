@@ -20,7 +20,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -f $(OBJECTS) $(EXECUTABLE)
+	rm -rf $(OBJECTS) $(EXECUTABLE) doc/
 
 doc:
 	doxygen Doxyfile
