@@ -6,6 +6,7 @@
  * 
  */
 
+#include "config.h"
 #include "socket.h"
 #include "error.h"
 
@@ -178,7 +179,7 @@ bool Socket::isReadyToRead()
     FD_SET(socketFileDescriptor, &recieveFd);
 
     /* 30 seconds timeout */
-    timeout.tv_sec = 20;
+    timeout.tv_sec = __SOCKET_READ_TIMEOUT;
     timeout.tv_usec = 0;
 
     selectReturnValue = select(socketFileDescriptor + 1, &recieveFd, NULL, NULL, &timeout);

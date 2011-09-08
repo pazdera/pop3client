@@ -6,6 +6,7 @@
  * 
  */
 
+#include "config.h"
 #include "error.h"
 
 #include <stdexcept>
@@ -16,7 +17,7 @@
 
 Error::Error(std::string what, std::string why)
 {
-    programName = PROGRAM_NAME;
+    programName = __PROGRAM_NAME;
 
     problem = what;
     reason  = why;

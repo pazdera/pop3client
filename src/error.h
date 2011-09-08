@@ -9,10 +9,9 @@
 #ifndef _ERROR__H
 #define _ERROR__H
 
+
 #include <stdexcept>
 #include <string>
-
-#define PROGRAM_NAME "pop3client"
 
 /**
  * @brief Base class for errors and exceptions.

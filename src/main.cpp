@@ -44,11 +44,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <cstdio>
 #include <termios.h>
 
+#include "config.h"
 #include "error.h"
 #include "cliarguments.h"
 #include "pop3session.h"
-
-#define PROGRAM_NAME "./pop3client"
 
 /**
  * @brief Read password from terminal (stdin)
@@ -101,7 +100,7 @@ std::string getPassword()
 void usage(int status)
 {
 
-    std::cerr << "Usage: " << PROGRAM_NAME << " -h hostname [-p port] -u username  [id]" << std::endl;
+    std::cerr << "Usage: " << __PROGRAM_NAME << " -h hostname [-p port] -u username  [id]" << std::endl;
     std::cerr << "       -h hostname     remote IP address or hostname" << std::endl;
     std::cerr << "       -p port         remote TCP port" << std::endl;
     std::cerr << "       -u username     username" << std::endl;

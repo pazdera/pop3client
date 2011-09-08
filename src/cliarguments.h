@@ -14,6 +14,7 @@
 #include <string>
 #include <unistd.h>
 
+#include "config.h"
 #include "error.h"
 
 /**
@@ -28,7 +29,7 @@ class CliArguments
     private:
       static const int  MIN_PORT_RANGE = 1;
       static const int  MAX_PORT_RANGE = 65535;
-      static const int  DEFAULT_PORT   = 110;
+      static const int  DEFAULT_PORT   = __DEFAULT_PORT;
 
       int port;
       std::string username;
