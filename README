@@ -1,1 +1,22 @@
 This is pop3client.
+
+A simple POP3 client implementation. It should be RFC 1939 compliant.
+
+BUILD
+    On most Linux-based operating systems simple `make` should suffice.
+    Build on other Unix-like system wasn't tested yet.
+
+    Build on Windows isn't supported and in order to compile this software
+    on Windows you might have to make some modifications. Most likely in
+    getPassword() function in main.cpp.
+
+USAGE
+    ./pop3client -h hostname [-p port] -u username  [id]
+        -h hostname     remote IP address or hostname
+        -p port         remote TCP port
+        -u username     username
+        id              id of the message to download
+
+LICENSE
+    This software is licensed under GNU GPLv3. See COPYING file for more information.
+
