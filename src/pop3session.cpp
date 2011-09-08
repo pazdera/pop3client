@@ -40,12 +40,12 @@ void Pop3Session::getResponse(ServerResponse* response)
     if (buffer[0] == '+')
     {
         response->status = true;
-        buffer.erase(0, 3); // Remove the "+OK "
+        buffer.erase(0, 4); // Remove the "+OK "
     }
     else
     {
         response->status = false;
-        buffer.erase(0, 4); // Remove the "-ERR "
+        buffer.erase(0, 5); // Remove the "-ERR "
     }
 
     response->statusMessage = buffer;
@@ -55,13 +55,15 @@ void Pop3Session::getResponse(ServerResponse* response)
 void Pop3Session::getMultilineData(ServerResponse* response)
 {
     std::string buffer;
+    int bytesRead;
 
     while (true)
     {
         buffer.clear();
-        socket->readLine(&buffer);
         
-        if (buffer == ".")
+        bytesRead = socket->readLine(&buffer);
+        
+        if (buffer == "." || bytesRead != 0)
         {
             break;
         }
@@ -83,7 +85,6 @@ void Pop3Session::open(std::string const& server, int port)
     
     ServerResponse welcomeMessage;
     
-    
     getResponse(&welcomeMessage);
 
     if (!welcomeMessage.status)
@@ -96,6 +97,13 @@ void Pop3Session::close()
 {
     if (socket != NULL)
     {
+        sendCommand("QUIT");
+
+        //ServerResponse quitACK;
+        //getResponse(&quitACK);
+
+        /* Maybe print a warning when QUIT fails? */
+
         delete socket;
     }
 }
@@ -162,7 +170,7 @@ void Pop3Session::printMessage(int messageId)
     getResponse(&response);
     if (!response.status)
     {
-        throw ServerError("Unable to retrieve message list", response.statusMessage);
+        throw ServerError("Unable to retrieve requested message", response.statusMessage);
     }
 
     getMultilineData(&response);
