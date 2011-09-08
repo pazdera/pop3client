@@ -63,7 +63,7 @@ void Pop3Session::getMultilineData(ServerResponse* response)
         
         bytesRead = socket->readLine(&buffer);
         
-        if (buffer == "." || bytesRead != 0)
+        if (buffer == "." || bytesRead == 0)
         {
             break;
         }
