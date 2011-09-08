@@ -1,6 +1,8 @@
 This is pop3client.
 
 A simple POP3 client implementation. It should be RFC 1939 compliant.
+It can be used to either download a list of available messages or
+download specific message by its ID. See USAGE for more information.
 
 BUILD
     On most Linux-based operating systems simple `make` should suffice.
@@ -16,6 +18,20 @@ USAGE
         -p port         remote TCP port
         -u username     username
         id              id of the message to download
+
+    If you supply message ID via the id argument respective message will be
+    downloaded and printed do stdout. To obtain list of available messages
+    omit the id argument.
+
+    When there are no messages available on the server, a notice is printed
+    on stdout.
+
+DOCUMENTATION
+    Sources are documented with doxygen. To generate documentation write
+
+        make doc
+
+    The documentation will be generated into doc/ in html and latex version.
 
 LICENSE
     This software is licensed under GNU GPLv3. See COPYING file for more information.
