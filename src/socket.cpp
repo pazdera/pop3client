@@ -104,6 +104,11 @@ void Socket::close()
 
 size_t Socket::read(char* buffer, size_t size)
 {
+    if (!isReadyToRead())
+    {
+        throw IOError("Recieving error", "Server not responding (connection timed out).");
+    }
+
     ssize_t bytesRead = ::read(socketFileDescriptor, buffer, size);
     if (bytesRead < 0)
     {
@@ -140,10 +145,11 @@ bool Socket::readCharacter(char* buffer)
     return false;
 }
 
-void Socket::readLine(std::string* line)
+size_t Socket::readLine(std::string* line)
 {
     char buffer[2] = "";
     *line = "";
+    size_t bytesRead = 0;
 
     if (readCharacter(&(buffer[1])))
     {
@@ -151,12 +157,15 @@ void Socket::readLine(std::string* line)
         {
             *line     += buffer[0]; // add char to string
             buffer[0]  = buffer[1];
+            bytesRead++;
         }
         while (readCharacter(&(buffer[1])) &&
                !(buffer[0] == '\r' && buffer[1] == '\n'));
      
         line->erase(0, 1);
     }
+
+    return bytesRead;
 }
 
 bool Socket::isReadyToRead()
@@ -169,7 +178,7 @@ bool Socket::isReadyToRead()
     FD_SET(socketFileDescriptor, &recieveFd);
 
     /* 30 seconds timeout */
-    timeout.tv_sec = 30;
+    timeout.tv_sec = 20;
     timeout.tv_usec = 0;
 
     selectReturnValue = select(socketFileDescriptor + 1, &recieveFd, NULL, NULL, &timeout);

@@ -76,9 +76,10 @@ class Socket
          *  \\r\\n is detected or no more data are available.
          *
          * @param [out] line Acquired data.
-         * @return void
+         * @return Number of bytes read (including the \\r\\n which
+         *         are NOT included in the \c line string.
          */
-        void readLine(std::string* line);
+        size_t readLine(std::string* line);
 
 
         /* Exceptions */
